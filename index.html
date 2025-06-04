@@ -3,85 +3,403 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panduan Betting</title>
+    <title>Panduan Betting - Tampilan Elegan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: Arial; margin: 20px; }
-        .image-container { 
-            border: 1px solid #eee; 
-            padding: 15px; 
-            margin-bottom: 20px;
-            max-width: 600px;
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
         }
-        img { 
-            max-width: 100%; 
-            height: auto;
-            border: 1px solid #ddd;
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        button { 
-            background: #4CAF50; 
-            color: white; 
-            border: none; 
-            padding: 8px 15px;
-            margin-top: 10px;
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeIn 1s ease;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            background: var(--primary);
+            color: white;
+        }
+
+        .card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .image-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: calc(var(--border-radius) - 5px);
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+        }
+
+        .image-wrapper img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: var(--transition);
+        }
+
+        .image-wrapper:hover img {
+            transform: scale(1.03);
+        }
+
+        .placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            height: 100%;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .placeholder i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
             cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex: 1;
         }
-        .error { color: red; }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--success);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(67, 97, 238, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>Panduan Betting</h1>
+    <div class="container">
+        <header>
+            <h1>Panduan Lengkap Betting</h1>
+            <p>Tutorial visual untuk memahami berbagai jenis taruhan</p>
+        </header>
 
-    <!-- Gambar 1 -->
-    <div class="image-container">
-        <h2>2.1 CARA BETTING 4D 2D 3D</h2>
-        <img 
-            src="https://lh3.googleusercontent.com/d/1CGEeOn2DIA9qDTjlckZFGsdhit1khO2T=w800" 
-            onerror="this.onerror=null; this.src='https://images.weserv.nl/?url=https://drive.google.com/uc?export=view&id=1CGEeOn2DIA9qDTjlckZFGsdhit1khO2T';"
-            alt="Cara Betting 4D 2D 3D"
-        >
-        <p id="error1" class="error"></p>
-        <button onclick="copyImage('image1')">Salin Gambar</button>
+        <div class="gallery">
+            <!-- Card 1 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-dice mr-2"></i> Cara Betting 4D 2D 3D</h2>
+                </div>
+                <div class="card-body">
+                    <div class="image-wrapper" id="image-container-1">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                        </div>
+                        <img 
+                            src="https://lh3.googleusercontent.com/d/1CGEeOn2DIA9qDTjlckZFGsdhit1khO2T=w800" 
+                            alt="Cara Betting 4D 2D 3D"
+                            onerror="handleImageError(1)"
+                            id="image-1"
+                        >
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-primary" onclick="copyImage('image-1')">
+                            <i class="far fa-copy"></i> Salin Gambar
+                        </button>
+                        <button class="btn btn-outline" onclick="downloadImage('image-1', 'cara-betting-4d-2d-3d')">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-table mr-2"></i> Cara Betting 2D Depan</h2>
+                </div>
+                <div class="card-body">
+                    <div class="image-wrapper" id="image-container-2">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                        </div>
+                        <img 
+                            src="https://lh3.googleusercontent.com/d/1vHktIcS5c1BR5ldH33paXhvzHvfrK6mk=w800" 
+                            alt="Cara Betting 2D Depan"
+                            onerror="handleImageError(2)"
+                            id="image-2"
+                        >
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-primary" onclick="copyImage('image-2')">
+                            <i class="far fa-copy"></i> Salin Gambar
+                        </button>
+                        <button class="btn btn-outline" onclick="downloadImage('image-2', 'cara-betting-2d-depan')">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Gambar 2 -->
-    <div class="image-container">
-        <h2>2.2 CARA BETTING 2D DEPAN</h2>
-        <img 
-            src="https://lh3.googleusercontent.com/d/1vHktIcS5c1BR5ldH33paXhvzHvfrK6mk=w800" 
-            onerror="this.onerror=null; this.src='https://images.weserv.nl/?url=https://drive.google.com/uc?export=view&id=1vHktIcS5c1BR5ldH33paXhvzHvfrK6mk';"
-            alt="Cara Betting 2D Depan"
-        >
-        <p id="error2" class="error"></p>
-        <button onclick="copyImage('image2')">Salin Gambar</button>
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Gambar berhasil disalin!</span>
     </div>
 
     <script>
-        // Fungsi salin gambar
-        function copyImage(imgId) {
-            const img = document.querySelector(`#${imgId}`);
+        // Fungsi untuk menangani error gambar
+        function handleImageError(cardNumber) {
+            const container = document.getElementById(`image-container-${cardNumber}`);
+            const img = document.getElementById(`image-${cardNumber}`);
+            
+            container.querySelector('.loading').style.display = 'none';
+            
+            // Coba gunakan proxy sebagai fallback
+            const proxyUrl = `https://images.weserv.nl/?url=https://drive.google.com/uc?export=view&id=${img.src.split('/').pop().split('=')[0]}`;
+            img.src = proxyUrl;
+            img.onerror = null;
+            
+            // Jika proxy juga gagal, tampilkan placeholder
+            img.onerror = function() {
+                container.innerHTML = `
+                    <div class="placeholder">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Gambar tidak dapat dimuat</h3>
+                        <p>Silakan coba buka link berikut:</p>
+                        <a href="https://drive.google.com/file/d/${img.src.split('/').pop().split('=')[0]}/view" target="_blank" style="color: var(--primary);">
+                            Buka di Google Drive
+                        </a>
+                    </div>
+                `;
+            };
+        }
+
+        // Fungsi untuk menyalin gambar ke clipboard
+        function copyImage(imageId) {
+            const img = document.getElementById(imageId);
             const range = document.createRange();
             range.selectNode(img);
             window.getSelection().removeAllRanges();
             window.getSelection().addRange(range);
             
             try {
-                document.execCommand('copy');
-                alert("Gambar berhasil disalin!");
+                const successful = document.execCommand('copy');
+                showToast(successful ? 'Gambar berhasil disalin!' : 'Gagal menyalin gambar');
             } catch (err) {
-                alert("Browser tidak mendukung. Gunakan klik kanan → Salin Gambar.");
+                showToast('Browser tidak mendukung salin otomatis. Gunakan klik kanan → Salin Gambar');
             }
+            
             window.getSelection().removeAllRanges();
         }
 
-        // Deteksi error gambar
-        document.addEventListener("DOMContentLoaded", function() {
-            const images = document.querySelectorAll("img");
-            images.forEach((img, index) => {
-                img.onerror = function() {
-                    document.getElementById(`error${index + 1}`).textContent = 
-                        "Gambar tidak dapat dimuat. Coba buka link secara manual: " + 
-                        img.src.replace('https://lh3.googleusercontent.com/d/', 'https://drive.google.com/file/d/') + '/view';
+        // Fungsi untuk mendownload gambar
+        function downloadImage(imageId, fileName) {
+            const img = document.getElementById(imageId);
+            const link = document.createElement('a');
+            link.href = img.src;
+            link.download = fileName + '.jpg';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast('Download dimulai...');
+        }
+
+        // Fungsi untuk menampilkan toast notifikasi
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Sembunyikan loading spinner ketika gambar selesai dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('.image-wrapper img');
+            images.forEach(img => {
+                img.onload = function() {
+                    this.parentElement.querySelector('.loading').style.display = 'none';
                 };
+                
+                // Jika gambar sudah di-cache, langsung sembunyikan loading
+                if (img.complete) {
+                    img.parentElement.querySelector('.loading').style.display = 'none';
+                }
             });
         });
     </script>
