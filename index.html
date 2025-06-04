@@ -890,24 +890,13 @@
             
             container.querySelector('.loading').style.display = 'none';
             
-            // Coba gunakan proxy sebagai fallback
-            const proxyUrl = `https://images.weserv.nl/?url=https://drive.google.com/uc?export=view&id=${img.src.split('/').pop().split('=')[0]}`;
-            img.src = proxyUrl;
-            img.onerror = null;
-            
-            // Jika proxy juga gagal, tampilkan placeholder
-            img.onerror = function() {
-                container.innerHTML = `
-                    <div class="placeholder">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <h3>Gambar tidak dapat dimuat</h3>
-                        <p>Silakan coba buka link berikut:</p>
-                        <a href="https://drive.google.com/file/d/${img.src.split('/').pop().split('=')[0]}/view" target="_blank" style="color: var(--primary);">
-                            Buka di Google Drive
-                        </a>
-                    </div>
-                `;
-            };
+            // Tampilkan placeholder jika gambar gagal dimuat
+            container.innerHTML = `
+                <div class="placeholder">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Gambar tidak dapat dimuat</h3>
+                </div>
+            `;
         }
 
         // Fungsi untuk menyalin gambar ke clipboard
