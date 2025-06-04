@@ -5,36 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panduan Betting</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .image-box { margin: 20px; border: 1px solid #ddd; padding: 15px; max-width: 600px; }
-        img { max-width: 100%; height: auto; display: block; margin: 10px 0; }
-        button { padding: 8px 15px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+        body { font-family: Arial; margin: 20px; }
+        .image-container { 
+            border: 1px solid #eee; 
+            padding: 15px; 
+            margin-bottom: 20px;
+            max-width: 600px;
+        }
+        img { 
+            max-width: 100%; 
+            height: auto;
+            border: 1px solid #ddd;
+        }
+        button { 
+            background: #4CAF50; 
+            color: white; 
+            border: none; 
+            padding: 8px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .error { color: red; }
     </style>
 </head>
 <body>
     <h1>Panduan Betting</h1>
 
     <!-- Gambar 1 -->
-    <div class="image-box">
+    <div class="image-container">
         <h2>2.1 CARA BETTING 4D 2D 3D</h2>
-        <img src="https://drive.google.com/uc?export=view&id=1CGEeOn2DIA9qDTjlckZFGsdhit1khO2T" 
-             alt="Cara Betting 4D 2D 3D">
+        <img 
+            src="https://lh3.googleusercontent.com/d/1CGEeOn2DIA9qDTjlckZFGsdhit1khO2T=w800" 
+            onerror="this.onerror=null; this.src='https://images.weserv.nl/?url=https://drive.google.com/uc?export=view&id=1CGEeOn2DIA9qDTjlckZFGsdhit1khO2T';"
+            alt="Cara Betting 4D 2D 3D"
+        >
+        <p id="error1" class="error"></p>
         <button onclick="copyImage('image1')">Salin Gambar</button>
-        <p id="message1" style="color: green; display: none;">Gambar disalin!</p>
     </div>
 
     <!-- Gambar 2 -->
-    <div class="image-box">
+    <div class="image-container">
         <h2>2.2 CARA BETTING 2D DEPAN</h2>
-        <img src="https://drive.google.com/uc?export=view&id=1vHktIcS5c1BR5ldH33paXhvzHvfrK6mk" 
-             alt="Cara Betting 2D Depan">
+        <img 
+            src="https://lh3.googleusercontent.com/d/1vHktIcS5c1BR5ldH33paXhvzHvfrK6mk=w800" 
+            onerror="this.onerror=null; this.src='https://images.weserv.nl/?url=https://drive.google.com/uc?export=view&id=1vHktIcS5c1BR5ldH33paXhvzHvfrK6mk';"
+            alt="Cara Betting 2D Depan"
+        >
+        <p id="error2" class="error"></p>
         <button onclick="copyImage('image2')">Salin Gambar</button>
-        <p id="message2" style="color: green; display: none;">Gambar disalin!</p>
     </div>
 
     <script>
+        // Fungsi salin gambar
         function copyImage(imgId) {
-            const img = document.getElementById(imgId);
+            const img = document.querySelector(`#${imgId}`);
             const range = document.createRange();
             range.selectNode(img);
             window.getSelection().removeAllRanges();
@@ -42,15 +66,24 @@
             
             try {
                 document.execCommand('copy');
-                const message = document.getElementById(`message${imgId.slice(-1)}`);
-                message.style.display = 'block';
-                setTimeout(() => message.style.display = 'none', 2000);
+                alert("Gambar berhasil disalin!");
             } catch (err) {
-                alert("Browser tidak mendukung salin gambar otomatis. Gunakan: Ctrl+C atau klik kanan → Salin Gambar.");
+                alert("Browser tidak mendukung. Gunakan klik kanan → Salin Gambar.");
             }
-            
             window.getSelection().removeAllRanges();
         }
+
+        // Deteksi error gambar
+        document.addEventListener("DOMContentLoaded", function() {
+            const images = document.querySelectorAll("img");
+            images.forEach((img, index) => {
+                img.onerror = function() {
+                    document.getElementById(`error${index + 1}`).textContent = 
+                        "Gambar tidak dapat dimuat. Coba buka link secara manual: " + 
+                        img.src.replace('https://lh3.googleusercontent.com/d/', 'https://drive.google.com/file/d/') + '/view';
+                };
+            });
+        });
     </script>
 </body>
 </html>
