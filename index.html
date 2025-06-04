@@ -435,18 +435,13 @@
             modalImg.style.cursor = currentScale > 1 ? 'move' : 'zoom-in';
         }
 
-        // Handle mouse wheel for zooming
+        // Handle mouse wheel for zooming (no Ctrl key needed)
         modal.addEventListener('wheel', function(e) {
             e.preventDefault();
             
-            if (e.ctrlKey) {
-                // Zoom in/out with Ctrl + Wheel
-                const delta = e.deltaY > 0 ? -scaleStep : scaleStep;
-                zoomImage(currentScale + delta);
-            } else if (currentScale > 1) {
-                // Pan the image when zoomed in
-                modalImg.style.transform = `scale(${currentScale}) translate(${-e.deltaX}px, ${-e.deltaY}px)`;
-            }
+            // Determine zoom direction based on wheel delta
+            const delta = e.deltaY > 0 ? -scaleStep : scaleStep;
+            zoomImage(currentScale + delta);
         });
 
         // Handle double click to reset zoom
