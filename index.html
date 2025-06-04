@@ -110,6 +110,7 @@
             align-items: center;
             justify-content: center;
             background: #f8f9fa;
+            cursor: pointer;
         }
 
         .image-wrapper img {
@@ -142,9 +143,8 @@
 
         .actions {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             margin-top: 1.5rem;
-            gap: 1rem;
         }
 
         .btn {
@@ -158,7 +158,6 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            flex: 1;
         }
 
         .btn-primary {
@@ -168,17 +167,6 @@
 
         .btn-primary:hover {
             background: var(--secondary);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-outline:hover {
-            background: var(--primary);
-            color: white;
         }
 
         .toast {
@@ -226,6 +214,68 @@
             animation: spin 1s linear infinite;
         }
 
+        /* Modal Zoom */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            overflow: auto;
+        }
+
+        .modal-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        .modal-img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            transition: transform 0.3s;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .zoom-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1002;
+        }
+
+        .zoom-btn {
+            background: rgba(255,255,255,0.7);
+            color: var(--dark);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
@@ -260,7 +310,7 @@
                     <h2><i class="fas fa-dice mr-2"></i> Cara Betting 4D 2D 3D</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-1">
+                    <div class="image-wrapper" onclick="openModal('image-1')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
@@ -275,9 +325,6 @@
                         <button class="btn btn-primary" onclick="copyImage('image-1')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <button class="btn btn-outline" onclick="downloadImage('image-1', 'cara-betting-4d-2d-3d')">
-                            <i class="fas fa-download"></i> Download
-                        </button>
                     </div>
                 </div>
             </div>
@@ -288,7 +335,7 @@
                     <h2><i class="fas fa-table mr-2"></i> Cara Betting 2D Depan</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-2">
+                    <div class="image-wrapper" onclick="openModal('image-2')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
@@ -303,12 +350,22 @@
                         <button class="btn btn-primary" onclick="copyImage('image-2')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <button class="btn btn-outline" onclick="downloadImage('image-2', 'cara-betting-2d-depan')">
-                            <i class="fas fa-download"></i> Download
-                        </button>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal Zoom -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <img id="modalImage" class="modal-img" src="" alt="">
+        </div>
+        <div class="zoom-controls">
+            <button class="zoom-btn" onclick="zoomIn()"><i class="fas fa-search-plus"></i></button>
+            <button class="zoom-btn" onclick="zoomOut()"><i class="fas fa-search-minus"></i></button>
+            <button class="zoom-btn" onclick="resetZoom()"><i class="fas fa-sync-alt"></i></button>
         </div>
     </div>
 
@@ -318,6 +375,11 @@
     </div>
 
     <script>
+        // Variabel untuk zoom
+        let currentScale = 1;
+        const scaleStep = 0.2;
+        const modalImg = document.getElementById('modalImage');
+        
         // Fungsi untuk menangani error gambar
         function handleImageError(cardNumber) {
             const container = document.getElementById(`image-container-${cardNumber}`);
@@ -363,18 +425,6 @@
             window.getSelection().removeAllRanges();
         }
 
-        // Fungsi untuk mendownload gambar
-        function downloadImage(imageId, fileName) {
-            const img = document.getElementById(imageId);
-            const link = document.createElement('a');
-            link.href = img.src;
-            link.download = fileName + '.jpg';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            showToast('Download dimulai...');
-        }
-
         // Fungsi untuk menampilkan toast notifikasi
         function showToast(message) {
             const toast = document.getElementById('toast');
@@ -387,6 +437,46 @@
                 toast.classList.remove('show');
             }, 3000);
         }
+
+        // Fungsi untuk modal zoom
+        function openModal(imageId) {
+            const modal = document.getElementById('imageModal');
+            const img = document.getElementById(imageId);
+            
+            modal.style.display = "block";
+            modalImg.src = img.src;
+            currentScale = 1;
+            modalImg.style.transform = `scale(${currentScale})`;
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = "none";
+        }
+
+        function zoomIn() {
+            currentScale += scaleStep;
+            modalImg.style.transform = `scale(${currentScale})`;
+        }
+
+        function zoomOut() {
+            if (currentScale > scaleStep) {
+                currentScale -= scaleStep;
+                modalImg.style.transform = `scale(${currentScale})`;
+            }
+        }
+
+        function resetZoom() {
+            currentScale = 1;
+            modalImg.style.transform = `scale(${currentScale})`;
+        }
+
+        // Tutup modal ketika klik di luar gambar
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        };
 
         // Sembunyikan loading spinner ketika gambar selesai dimuat
         document.addEventListener('DOMContentLoaded', function() {
