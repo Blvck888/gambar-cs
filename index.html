@@ -38,11 +38,26 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            position: relative; /* Added for logo positioning */
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .logo img {
+            width: 100px; /* Adjust size as needed */
+            height: auto;
+            display: block;
         }
 
         header {
             text-align: center;
             margin-bottom: 3rem;
+            margin-top: 80px; /* Added margin to prevent logo overlap */
             animation: fadeIn 1s ease;
         }
 
@@ -295,11 +310,18 @@
             h1 {
                 font-size: 2rem;
             }
+
+            .logo img {
+                width: 80px; /* Smaller logo on mobile */
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="logo">
+            <img src="https://cdn.areabermain.club/assets/cdn/az4/2025/04/23/20250423/a82bdc6fb564d0dff3671aeb9a4d1da5/logo.png" alt="Logo">
+        </div>
         <header>
             <h1>Panduan Lengkap Betting</h1>
             <p>Tutorial visual untuk memahami berbagai jenis taruhan</p>
@@ -366,7 +388,7 @@
 
     <!-- Modal Zoom -->
     <div id="imageModal" class="modal">
-        <span class="close" onclick="closeModal()">&times;</span>
+        <span class="close" onclick="closeModal()">×</span>
         <div class="modal-content">
             <img id="modalImage" class="modal-img" src="" alt="">
         </div>
