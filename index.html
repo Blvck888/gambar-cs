@@ -233,6 +233,7 @@
             align-items: center;
             height: 100%;
             width: 100%;
+            cursor: zoom-in;
         }
 
         .modal-img {
@@ -240,6 +241,7 @@
             max-height: 90%;
             object-fit: contain;
             transition: transform 0.3s;
+            transform-origin: center center;
         }
 
         .close {
@@ -250,30 +252,6 @@
             font-size: 35px;
             font-weight: bold;
             cursor: pointer;
-        }
-
-        .zoom-controls {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            z-index: 1002;
-        }
-
-        .zoom-btn {
-            background: rgba(255,255,255,0.7);
-            color: var(--dark);
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         @keyframes spin {
@@ -362,11 +340,6 @@
         <div class="modal-content">
             <img id="modalImage" class="modal-img" src="" alt="">
         </div>
-        <div class="zoom-controls">
-            <button class="zoom-btn" onclick="zoomIn()"><i class="fas fa-search-plus"></i></button>
-            <button class="zoom-btn" onclick="zoomOut()"><i class="fas fa-search-minus"></i></button>
-            <button class="zoom-btn" onclick="resetZoom()"><i class="fas fa-sync-alt"></i></button>
-        </div>
     </div>
 
     <div class="toast" id="toast">
@@ -377,8 +350,11 @@
     <script>
         // Variabel untuk zoom
         let currentScale = 1;
-        const scaleStep = 0.2;
+        const scaleStep = 0.1;
+        const minScale = 0.5;
+        const maxScale = 5;
         const modalImg = document.getElementById('modalImage');
+        const modal = document.getElementById('imageModal');
         
         // Fungsi untuk menangani error gambar
         function handleImageError(cardNumber) {
@@ -440,39 +416,74 @@
 
         // Fungsi untuk modal zoom
         function openModal(imageId) {
-            const modal = document.getElementById('imageModal');
             const img = document.getElementById(imageId);
             
             modal.style.display = "block";
             modalImg.src = img.src;
             currentScale = 1;
             modalImg.style.transform = `scale(${currentScale})`;
+            modalImg.style.cursor = currentScale > 1 ? 'move' : 'zoom-in';
         }
 
         function closeModal() {
-            document.getElementById('imageModal').style.display = "none";
+            modal.style.display = "none";
         }
 
-        function zoomIn() {
-            currentScale += scaleStep;
+        function zoomImage(scale) {
+            currentScale = Math.max(minScale, Math.min(maxScale, scale));
             modalImg.style.transform = `scale(${currentScale})`;
+            modalImg.style.cursor = currentScale > 1 ? 'move' : 'zoom-in';
         }
 
-        function zoomOut() {
-            if (currentScale > scaleStep) {
-                currentScale -= scaleStep;
-                modalImg.style.transform = `scale(${currentScale})`;
+        // Handle mouse wheel for zooming
+        modal.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            
+            if (e.ctrlKey) {
+                // Zoom in/out with Ctrl + Wheel
+                const delta = e.deltaY > 0 ? -scaleStep : scaleStep;
+                zoomImage(currentScale + delta);
+            } else if (currentScale > 1) {
+                // Pan the image when zoomed in
+                modalImg.style.transform = `scale(${currentScale}) translate(${-e.deltaX}px, ${-e.deltaY}px)`;
             }
-        }
+        });
 
-        function resetZoom() {
-            currentScale = 1;
-            modalImg.style.transform = `scale(${currentScale})`;
-        }
+        // Handle double click to reset zoom
+        modalImg.addEventListener('dblclick', function() {
+            zoomImage(1);
+        });
+
+        // Handle mouse move for panning when zoomed in
+        let isDragging = false;
+        let startX, startY, translateX = 0, translateY = 0;
+
+        modalImg.addEventListener('mousedown', function(e) {
+            if (currentScale > 1) {
+                isDragging = true;
+                startX = e.clientX - translateX;
+                startY = e.clientY - translateY;
+                modalImg.style.cursor = 'grabbing';
+            }
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (!isDragging) return;
+            
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+            modalImg.style.transform = `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
+        });
+
+        document.addEventListener('mouseup', function() {
+            isDragging = false;
+            if (currentScale > 1) {
+                modalImg.style.cursor = 'move';
+            }
+        });
 
         // Tutup modal ketika klik di luar gambar
         window.onclick = function(event) {
-            const modal = document.getElementById('imageModal');
             if (event.target == modal) {
                 closeModal();
             }
