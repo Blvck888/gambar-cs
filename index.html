@@ -164,7 +164,6 @@
             display: flex;
             justify-content: center;
             margin-top: 1.5rem;
-            gap: 1rem;
         }
 
         .btn {
@@ -186,15 +185,6 @@
         }
 
         .btn-primary:hover {
-            background: var(--secondary);
-        }
-
-        .btn-secondary {
-            background: var(--accent);
-            color: white;
-        }
-
-        .btn-secondary:hover {
             background: var(--secondary);
         }
 
@@ -304,11 +294,6 @@
             .logo-container img {
                 height: 40px;
             }
-
-            .actions {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
         }
     </style>
 </head>
@@ -330,14 +315,14 @@
                     <h2><i class="fas fa-dice mr-2"></i> Cara Betting 4D 2D 3D</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-1" onclick="openModal('image-1')">
+                    <div class="image-wrapper" onclick="openModal('image-1')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                         <img 
                             src="https://lh3.googleusercontent.com/d/1CGEeOn2DIA9qDTjlckZFGsdhit1khO2T=w800" 
                             alt="Cara Betting 4D 2D 3D"
-                            onerror="handleImageError(1, 'https://drive.google.com/file/d/1CGEeOn2DIA9qDTjlckZFGsdhit1khO2T/view')"
+                            onerror="handleImageError(1)"
                             id="image-1"
                         >
                     </div>
@@ -345,9 +330,6 @@
                         <button class="btn btn-primary" onclick="copyImage('image-1')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <a href="https://drive.google.com/file/d/1CGEeOn2DIA9qDTjlckZFGsdhit1khO2T/view" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-external-link-alt"></i> Buka di Google Drive
-                        </a>
                     </div>
                 </div>
             </div>
@@ -358,14 +340,14 @@
                     <h2><i class="fas fa-table mr-2"></i> Cara Betting 2D Depan</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-2" onclick="openModal('image-2')">
+                    <div class="image-wrapper" onclick="openModal('image-2')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                         <img 
                             src="https://lh3.googleusercontent.com/d/1vHktIcS5c1BR5ldH33paXhvzHvfrK6mk=w800" 
                             alt="Cara Betting 2D Depan"
-                            onerror="handleImageError(2, 'https://drive.google.com/file/d/1vHktIcS5c1BR5ldH33paXhvzHvfrK6mk/view')"
+                            onerror="handleImageError(2)"
                             id="image-2"
                         >
                     </div>
@@ -373,27 +355,24 @@
                         <button class="btn btn-primary" onclick="copyImage('image-2')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <a href="https://drive.google.com/file/d/1vHktIcS5c1BR5ldH33paXhvzHvfrK6mk/view" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-external-link-alt"></i> Buka di Google Drive
-                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 2.3 -->
+            <!-- Card 3 -->
             <div class="card">
                 <div class="card-header">
-                    <h2><i class="fas fa-dice-two mr-2"></i> Cara Betting 2D Tengah</h2>
+                    <h2><i class="fas fa-align-center mr-2"></i> Cara Betting 2D Tengah</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-3" onclick="openModal('image-3')">
+                    <div class="image-wrapper" onclick="openModal('image-3')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                         <img 
-                            src="https://drive.google.com/uc?export=view&id=1jSslB2xJo79CPlPIoO9lURBc6oYekiuD" 
+                            src="https://lh3.googleusercontent.com/d/1KzqCfC_iDyk47wBdThfykirpGKVngEfV=w800" 
                             alt="Cara Betting 2D Tengah"
-                            onerror="handleImageError(3, 'https://drive.google.com/file/d/1jSslB2xJo79CPlPIoO9lURBc6oYekiuD/view?usp=drive_link')"
+                            onerror="handleImageError(3)"
                             id="image-3"
                         >
                     </div>
@@ -401,27 +380,24 @@
                         <button class="btn btn-primary" onclick="copyImage('image-3')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <a href="https://drive.google.com/file/d/1jSslB2xJo79CPlPIoO9lURBc6oYekiuD/view?usp=drive_link" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-external-link-alt"></i> Buka di Google Drive
-                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 2.4 -->
+            <!-- Card 4 -->
             <div class="card">
                 <div class="card-header">
-                    <h2><i class="fas fa-check-circle mr-2"></i> Cara Betting Colok Bebas</h2>
+                    <h2><i class="fas fa-star mr-2"></i> Cara Betting Colok Bebas</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-4" onclick="openModal('image-4')">
+                    <div class="image-wrapper" onclick="openModal('image-4')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                         <img 
-                            src="https://drive.google.com/uc?export=view&id=17QoLT1tAXZQW7LLmtAMT-3-WPfnKJ-RZ" 
+                            src="https://lh3.googleusercontent.com/d/1AXhTRx99A2YiZaIF5iyywczQJ7up8S3K=w800" 
                             alt="Cara Betting Colok Bebas"
-                            onerror="handleImageError(4, 'https://drive.google.com/file/d/17QoLT1tAXZQW7LLmtAMT-3-WPfnKJ-RZ/view?usp=drive_link')"
+                            onerror="handleImageError(4)"
                             id="image-4"
                         >
                     </div>
@@ -429,27 +405,24 @@
                         <button class="btn btn-primary" onclick="copyImage('image-4')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <a href="https://drive.google.com/file/d/17QoLT1tAXZQW7LLmtAMT-3-WPfnKJ-RZ/view?usp=drive_link" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-external-link-alt"></i> Buka di Google Drive
-                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 2.5 -->
+            <!-- Card 5 -->
             <div class="card">
                 <div class="card-header">
-                    <h2><i class="fas fa-check-double mr-2"></i> Cara Betting Colok Bebas 2D</h2>
+                    <h2><i class="fas fa-star-half-alt mr-2"></i> Cara Betting Colok Bebas 2D</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-5" onclick="openModal('image-5')">
+                    <div class="image-wrapper" onclick="openModal('image-5')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                         <img 
-                            src="https://drive.google.com/uc?export=view&id=1jSslB2xJo79CPlPIoO9lURBc6oYekiuD" 
+                            src="https://lh3.googleusercontent.com/d/1jSslB2xJo79CPlPIoO9lURBc6oYekiuD=w800" 
                             alt="Cara Betting Colok Bebas 2D"
-                            onerror="handleImageError(5, 'https://drive.google.com/file/d/1jSslB2xJo79CPlPIoO9lURBc6oYekiuD/view?usp=drive_link')"
+                            onerror="handleImageError(5)"
                             id="image-5"
                         >
                     </div>
@@ -457,27 +430,24 @@
                         <button class="btn btn-primary" onclick="copyImage('image-5')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <a href="https://drive.google.com/file/d/1jSslB2xJo79CPlPIoO9lURBc6oYekiuD/view?usp=drive_link" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-external-link-alt"></i> Buka di Google Drive
-                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 2.6 -->
+            <!-- Card 6 -->
             <div class="card">
                 <div class="card-header">
                     <h2><i class="fas fa-dragon mr-2"></i> Cara Betting Colok Naga</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-6" onclick="openModal('image-6')">
+                    <div class="image-wrapper" onclick="openModal('image-6')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                         <img 
-                            src="https://drive.google.com/uc?export=view&id=17QoLT1tAXZQW7LLmtAMT-3-WPfnKJ-RZ" 
+                            src="https://lh3.googleusercontent.com/d/17QoLT1tAXZQW7LLmtAMT-3-WPfnKJ-RZ=w800" 
                             alt="Cara Betting Colok Naga"
-                            onerror="handleImageError(6, 'https://drive.google.com/file/d/17QoLT1tAXZQW7LLmtAMT-3-WPfnKJ-RZ/view?usp=drive_link')"
+                            onerror="handleImageError(6)"
                             id="image-6"
                         >
                     </div>
@@ -485,27 +455,24 @@
                         <button class="btn btn-primary" onclick="copyImage('image-6')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <a href="https://drive.google.com/file/d/17QoLT1tAXZQW7LLmtAMT-3-WPfnKJ-RZ/view?usp=drive_link" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-external-link-alt"></i> Buka di Google Drive
-                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 2.7 -->
+            <!-- Card 7 -->
             <div class="card">
                 <div class="card-header">
                     <h2><i class="fas fa-bullseye mr-2"></i> Cara Betting Colok Jitu</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-7" onclick="openModal('image-7')">
+                    <div class="image-wrapper" onclick="openModal('image-7')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                         <img 
-                            src="https://drive.google.com/uc?export=view&id=1UN4zkCAk-ZduCAvLz8AyZ7GV26B_Ynb2" 
+                            src="https://lh3.googleusercontent.com/d/1UN4zkCAk-ZduCAvLz8AyZ7GV26B_Ynb2=w800" 
                             alt="Cara Betting Colok Jitu"
-                            onerror="handleImageError(7, 'https://drive.google.com/file/d/1UN4zkCAk-ZduCAvLz8AyZ7GV26B_Ynb2/view?usp=drive_link')"
+                            onerror="handleImageError(7)"
                             id="image-7"
                         >
                     </div>
@@ -513,27 +480,24 @@
                         <button class="btn btn-primary" onclick="copyImage('image-7')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <a href="https://drive.google.com/file/d/1UN4zkCAk-ZduCAvLz8AyZ7GV26B_Ynb2/view?usp=drive_link" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-external-link-alt"></i> Buka di Google Drive
-                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 2.8 -->
+            <!-- Card 8 -->
             <div class="card">
                 <div class="card-header">
                     <h2><i class="fas fa-arrows-alt-h mr-2"></i> Cara Betting Tengah Tepi</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-8" onclick="openModal('image-8')">
+                    <div class="image-wrapper" onclick="openModal('image-8')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                         <img 
-                            src="https://drive.google.com/uc?export=view&id=1nWpLvgkmeMtJ4iOuorOIop-vfVuO3BlL" 
+                            src="https://lh3.googleusercontent.com/d/1nWpLvgkmeMtJ4iOuorOIop-vfVuO3BlL=w800" 
                             alt="Cara Betting Tengah Tepi"
-                            onerror="handleImageError(8, 'https://drive.google.com/file/d/1nWpLvgkmeMtJ4iOuorOIop-vfVuO3BlL/view?usp=drive_link')"
+                            onerror="handleImageError(8)"
                             id="image-8"
                         >
                     </div>
@@ -541,27 +505,24 @@
                         <button class="btn btn-primary" onclick="copyImage('image-8')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <a href="https://drive.google.com/file/d/1nWpLvgkmeMtJ4iOuorOIop-vfVuO3BlL/view?usp=drive_link" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-external-link-alt"></i> Buka di Google Drive
-                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 2.9 -->
+            <!-- Card 9 -->
             <div class="card">
                 <div class="card-header">
-                    <h2><i class="fas fa-cube mr-2"></i> Cara Betting Dasar</h2>
+                    <h2><i class="fas fa-layer-group mr-2"></i> Cara Betting Dasar</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-9" onclick="openModal('image-9')">
+                    <div class="image-wrapper" onclick="openModal('image-9')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                         <img 
-                            src="https://drive.google.com/uc?export=view&id=18xqGDbh4kbinNSKG7FeXc6ESuU4vUUM5" 
+                            src="https://lh3.googleusercontent.com/d/18xqGDbh4kbinNSKG7FeXc6ESuU4vUUM5=w800" 
                             alt="Cara Betting Dasar"
-                            onerror="handleImageError(9, 'https://drive.google.com/file/d/18xqGDbh4kbinNSKG7FeXc6ESuU4vUUM5/view?usp=drive_link')"
+                            onerror="handleImageError(9)"
                             id="image-9"
                         >
                     </div>
@@ -569,27 +530,24 @@
                         <button class="btn btn-primary" onclick="copyImage('image-9')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <a href="https://drive.google.com/file/d/18xqGDbh4kbinNSKG7FeXc6ESuU4vUUM5/view?usp=drive_link" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-external-link-alt"></i> Buka di Google Drive
-                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 3.0 -->
+            <!-- Card 10 -->
             <div class="card">
                 <div class="card-header">
-                    <h2><i class="fas fa-balance-scale mr-2"></i> Cara Betting 50 50</h2>
+                    <h2><i class="fas fa-percentage mr-2"></i> Cara Betting 50 50</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-10" onclick="openModal('image-10')">
+                    <div class="image-wrapper" onclick="openModal('image-10')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                         <img 
-                            src="https://drive.google.com/uc?export=view&id=1sTEDd-5P8fWNf5-iyTM7E46jkK64RNLk" 
+                            src="https://lh3.googleusercontent.com/d/1sTEDd-5P8fWNf5-iyTM7E46jkK64RNLk=w800" 
                             alt="Cara Betting 50 50"
-                            onerror="handleImageError(10, 'https://drive.google.com/file/d/1sTEDd-5P8fWNf5-iyTM7E46jkK64RNLk/view?usp=drive_link')"
+                            onerror="handleImageError(10)"
                             id="image-10"
                         >
                     </div>
@@ -597,27 +555,24 @@
                         <button class="btn btn-primary" onclick="copyImage('image-10')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <a href="https://drive.google.com/file/d/1sTEDd-5P8fWNf5-iyTM7E46jkK64RNLk/view?usp=drive_link" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-external-link-alt"></i> Buka di Google Drive
-                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 3.1 -->
+            <!-- Card 11 -->
             <div class="card">
                 <div class="card-header">
-                    <h2><i class="fas fa-paw mr-2"></i> Cara Betting Shio</h2>
+                    <h2><i class="fas fa-calendar-alt mr-2"></i> Cara Betting Shio</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-11" onclick="openModal('image-11')">
+                    <div class="image-wrapper" onclick="openModal('image-11')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                         <img 
-                            src="https://drive.google.com/uc?export=view&id=1FfNi5CaL3UJdHrAdpIIwapMg_mZFIxFB" 
+                            src="https://lh3.googleusercontent.com/d/1FfNi5CaL3UJdHrAdpIIwapMg_mZFIxFB=w800" 
                             alt="Cara Betting Shio"
-                            onerror="handleImageError(11, 'https://drive.google.com/file/d/1FfNi5CaL3UJdHrAdpIIwapMg_mZFIxFB/view?usp=drive_copy')"
+                            onerror="handleImageError(11)"
                             id="image-11"
                         >
                     </div>
@@ -625,27 +580,24 @@
                         <button class="btn btn-primary" onclick="copyImage('image-11')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <a href="https://drive.google.com/file/d/1FfNi5CaL3UJdHrAdpIIwapMg_mZFIxFB/view?usp=drive_copy" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-external-link-alt"></i> Buka di Google Drive
-                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 3.2 -->
+            <!-- Card 12 -->
             <div class="card">
                 <div class="card-header">
-                    <h2><i class="fas fa-arrows-alt mr-2"></i> Cara Betting Silang Homo</h2>
+                    <h2><i class="fas fa-times-circle mr-2"></i> Cara Betting Silang Homo</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-12" onclick="openModal('image-12')">
+                    <div class="image-wrapper" onclick="openModal('image-12')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                         <img 
-                            src="https://drive.google.com/uc?export=view&id=1CPst2-gXxzSCsQ5BUcEMLd6aTbif_d4x" 
+                            src="https://lh3.googleusercontent.com/d/1CPst2-gXxzSCsQ5BUcEMLd6aTbif_d4x=w800" 
                             alt="Cara Betting Silang Homo"
-                            onerror="handleImageError(12, 'https://drive.google.com/file/d/1CPst2-gXxzSCsQ5BUcEMLd6aTbif_d4x/view?usp=drive_copy')"
+                            onerror="handleImageError(12)"
                             id="image-12"
                         >
                     </div>
@@ -653,27 +605,24 @@
                         <button class="btn btn-primary" onclick="copyImage('image-12')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <a href="https://drive.google.com/file/d/1CPst2-gXxzSCsQ5BUcEMLd6aTbif_d4x/view?usp=drive_copy" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-external-link-alt"></i> Buka di Google Drive
-                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 3.3 -->
+            <!-- Card 13 -->
             <div class="card">
                 <div class="card-header">
-                    <h2><i class="fas fa-flower mr-2"></i> Cara Betting Kembang Kempis</h2>
+                    <h2><i class="fas fa-arrows-alt-v mr-2"></i> Cara Betting Kembang Kempis</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-13" onclick="openModal('image-13')">
+                    <div class="image-wrapper" onclick="openModal('image-13')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                         <img 
-                            src="https://drive.google.com/uc?export=view&id=14myPsmHDTBGBog5aBqGMP5abDfm6W_MA" 
+                            src="https://lh3.googleusercontent.com/d/14myPsmHDTBGBog5aBqGMP5abDfm6W_MA=w800" 
                             alt="Cara Betting Kembang Kempis"
-                            onerror="handleImageError(13, 'https://drive.google.com/file/d/14myPsmHDTBGBog5aBqGMP5abDfm6W_MA/view?usp=drive_copy')"
+                            onerror="handleImageError(13)"
                             id="image-13"
                         >
                     </div>
@@ -681,27 +630,24 @@
                         <button class="btn btn-primary" onclick="copyImage('image-13')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <a href="https://drive.google.com/file/d/14myPsmHDTBGBog5aBqGMP5abDfm6W_MA/view?usp=drive_copy" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-external-link-alt"></i> Buka di Google Drive
-                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 3.4 -->
+            <!-- Card 14 -->
             <div class="card">
                 <div class="card-header">
-                    <h2><i class="fas fa-layer-group mr-2"></i> Cara Betting Kombinasi</h2>
+                    <h2><i class="fas fa-th mr-2"></i> Cara Betting Kombinasi</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-14" onclick="openModal('image-14')">
+                    <div class="image-wrapper" onclick="openModal('image-14')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                         <img 
-                            src="https://drive.google.com/uc?export=view&id=1V_1kXTWHbIa0bxR-0y5SmK7fM6wvLdQJ" 
+                            src="https://lh3.googleusercontent.com/d/1V_1kXTWHbIa0bxR-0y5SmK7fM6wvLdQJ=w800" 
                             alt="Cara Betting Kombinasi"
-                            onerror="handleImageError(14, 'https://drive.google.com/file/d/1V_1kXTWHbIa0bxR-0y5SmK7fM6wvLdQJ/view?usp=drive_copy')"
+                            onerror="handleImageError(14)"
                             id="image-14"
                         >
                     </div>
@@ -709,27 +655,24 @@
                         <button class="btn btn-primary" onclick="copyImage('image-14')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <a href="https://drive.google.com/file/d/1V_1kXTWHbIa0bxR-0y5SmK7fM6wvLdQJ/view?usp=drive_copy" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-external-link-alt"></i> Buka di Google Drive
-                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 4.1 -->
+            <!-- Card 15 -->
             <div class="card">
                 <div class="card-header">
-                    <h2><i class="fas fa-tachometer-alt mr-2"></i> Cara Betting Fast 4D</h2>
+                    <h2><i class="fas fa-bolt mr-2"></i> Cara Betting Fast 4D</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-15" onclick="openModal('image-15')">
+                    <div class="image-wrapper" onclick="openModal('image-15')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                         <img 
-                            src="https://drive.google.com/uc?export=view&id=1gaRIw0yhs9MaKZiJ8nIRdscWwuBMEVXC" 
+                            src="https://lh3.googleusercontent.com/d/1gaRIw0yhs9MaKZiJ8nIRdscWwuBMEVXC=w800" 
                             alt="Cara Betting Fast 4D"
-                            onerror="handleImageError(15, 'https://drive.google.com/file/d/1gaRIw0yhs9MaKZiJ8nIRdscWwuBMEVXC/view?usp=drive_copy')"
+                            onerror="handleImageError(15)"
                             id="image-15"
                         >
                     </div>
@@ -737,27 +680,24 @@
                         <button class="btn btn-primary" onclick="copyImage('image-15')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <a href="https://drive.google.com/file/d/1gaRIw0yhs9MaKZiJ8nIRdscWwuBMEVXC/view?usp=drive_copy" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-external-link-alt"></i> Buka di Google Drive
-                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 4.2 -->
+            <!-- Card 16 -->
             <div class="card">
                 <div class="card-header">
                     <h2><i class="fas fa-fist-raised mr-2"></i> Cara Betting Angka Tarung</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-16" onclick="openModal('image-16')">
+                    <div class="image-wrapper" onclick="openModal('image-16')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                         <img 
-                            src="https://drive.google.com/uc?export=view&id=1bS7gn6eMqT6HLZ01SbHZkcTbE0E5O6Cx" 
+                            src="https://lh3.googleusercontent.com/d/1bS7gn6eMqT6HLZ01SbHZkcTbE0E5O6Cx=w800" 
                             alt="Cara Betting Angka Tarung"
-                            onerror="handleImageError(16, 'https://drive.google.com/file/d/1bS7gn6eMqT6HLZ01SbHZkcTbE0E5O6Cx/view?usp=drive_copy')"
+                            onerror="handleImageError(16)"
                             id="image-16"
                         >
                     </div>
@@ -765,27 +705,24 @@
                         <button class="btn btn-primary" onclick="copyImage('image-16')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <a href="https://drive.google.com/file/d/1bS7gn6eMqT6HLZ01SbHZkcTbE0E5O6Cx/view?usp=drive_copy" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-external-link-alt"></i> Buka di Google Drive
-                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 4.3 -->
+            <!-- Card 17 -->
             <div class="card">
                 <div class="card-header">
-                    <h2><i class="fas fa-random mr-2"></i> Cara Betting BBFS</h2>
+                    <h2><i class="fas fa-border-all mr-2"></i> Cara Betting BBFS</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-17" onclick="openModal('image-17')">
+                    <div class="image-wrapper" onclick="openModal('image-17')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                         <img 
-                            src="https://drive.google.com/uc?export=view&id=1TlsZvYjt2gEAPeCywxqywLfjL0o0P5Di" 
+                            src="https://lh3.googleusercontent.com/d/1TlsZvYjt2gEAPeCywxqywLfjL0o0P5Di=w800" 
                             alt="Cara Betting BBFS"
-                            onerror="handleImageError(17, 'https://drive.google.com/file/d/1TlsZvYjt2gEAPeCywxqywLfjL0o0P5Di/view?usp=drive_copy')"
+                            onerror="handleImageError(17)"
                             id="image-17"
                         >
                     </div>
@@ -793,27 +730,24 @@
                         <button class="btn btn-primary" onclick="copyImage('image-17')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <a href="https://drive.google.com/file/d/1TlsZvYjt2gEAPeCywxqywLfjL0o0P5Di/view?usp=drive_copy" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-external-link-alt"></i> Buka di Google Drive
-                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 4.4 -->
+            <!-- Card 18 -->
             <div class="card">
                 <div class="card-header">
-                    <h2><i class="fas fa-bolt mr-2"></i> Cara Betting Quick 2D</h2>
+                    <h2><i class="fas fa-stopwatch mr-2"></i> Cara Betting Quick 2D</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-18" onclick="openModal('image-18')">
+                    <div class="image-wrapper" onclick="openModal('image-18')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                         <img 
-                            src="https://drive.google.com/uc?export=view&id=1MLmUQjeiT1jW-HHIwe7hsBG7NGrImoFZ" 
+                            src="https://lh3.googleusercontent.com/d/1MLmUQjeiT1jW-HHIwe7hsBG7NGrImoFZ=w800" 
                             alt="Cara Betting Quick 2D"
-                            onerror="handleImageError(18, 'https://drive.google.com/file/d/1MLmUQjeiT1jW-HHIwe7hsBG7NGrImoFZ/view?usp=drive_copy')"
+                            onerror="handleImageError(18)"
                             id="image-18"
                         >
                     </div>
@@ -821,27 +755,24 @@
                         <button class="btn btn-primary" onclick="copyImage('image-18')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <a href="https://drive.google.com/file/d/1MLmUQjeiT1jW-HHIwe7hsBG7NGrImoFZ/view?usp=drive_copy" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-external-link-alt"></i> Buka di Google Drive
-                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 4.5 -->
+            <!-- Card 19 -->
             <div class="card">
                 <div class="card-header">
-                    <h2><i class="fas fa-th mr-2"></i> Cara Betting Pola Colok</h2>
+                    <h2><i class="fas fa-star-of-david mr-2"></i> Cara Betting Pola Colok</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-19" onclick="openModal('image-19')">
+                    <div class="image-wrapper" onclick="openModal('image-19')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                         <img 
-                            src="https://drive.google.com/uc?export=view&id=1hlW4ira4hPBQa7bifhQ-LmyE_MRa7JQX" 
+                            src="https://lh3.googleusercontent.com/d/1hlW4ira4hPBQa7bifhQ-LmyE_MRa7JQX=w800" 
                             alt="Cara Betting Pola Colok"
-                            onerror="handleImageError(19, 'https://drive.google.com/file/d/1hlW4ira4hPBQa7bifhQ-LmyE_MRa7JQX/view?usp=drive_copy')"
+                            onerror="handleImageError(19)"
                             id="image-19"
                         >
                     </div>
@@ -849,27 +780,24 @@
                         <button class="btn btn-primary" onclick="copyImage('image-19')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <a href="https://drive.google.com/file/d/1hlW4ira4hPBQa7bifhQ-LmyE_MRa7JQX/view?usp=drive_copy" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-external-link-alt"></i> Buka di Google Drive
-                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 4.7 -->
+            <!-- Card 20 -->
             <div class="card">
                 <div class="card-header">
                     <h2><i class="fas fa-magic mr-2"></i> Cara Betting Mistik</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-20" onclick="openModal('image-20')">
+                    <div class="image-wrapper" onclick="openModal('image-20')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                         <img 
-                            src="https://drive.google.com/uc?export=view&id=1vhksv8wg79VbeQ1wq0xQoux5XinGgomB" 
+                            src="https://lh3.googleusercontent.com/d/1vhksv8wg79VbeQ1wq0xQoux5XinGgomB=w800" 
                             alt="Cara Betting Mistik"
-                            onerror="handleImageError(20, 'https://drive.google.com/file/d/1vhksv8wg79VbeQ1wq0xQoux5XinGgomB/view?usp=drive_copy')"
+                            onerror="handleImageError(20)"
                             id="image-20"
                         >
                     </div>
@@ -877,27 +805,24 @@
                         <button class="btn btn-primary" onclick="copyImage('image-20')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <a href="https://drive.google.com/file/d/1vhksv8wg79VbeQ1wq0xQoux5XinGgomB/view?usp=drive_copy" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-external-link-alt"></i> Buka di Google Drive
-                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 4.8 -->
+            <!-- Card 21 -->
             <div class="card">
                 <div class="card-header">
                     <h2><i class="fas fa-list-ol mr-2"></i> Cara Betting Index</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-21" onclick="openModal('image-21')">
+                    <div class="image-wrapper" onclick="openModal('image-21')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                         <img 
-                            src="https://drive.google.com/uc?export=view&id=1soYBlXXtuR6SyHn2sjKwQAMd1Hj-WBR9" 
+                            src="https://lh3.googleusercontent.com/d/1soYBlXXtuR6SyHn2sjKwQAMd1Hj-WBR9=w800" 
                             alt="Cara Betting Index"
-                            onerror="handleImageError(21, 'https://drive.google.com/file/d/1soYBlXXtuR6SyHn2sjKwQAMd1Hj-WBR9/view?usp=drive_copy')"
+                            onerror="handleImageError(21)"
                             id="image-21"
                         >
                     </div>
@@ -905,27 +830,24 @@
                         <button class="btn btn-primary" onclick="copyImage('image-21')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <a href="https://drive.google.com/file/d/1soYBlXXtuR6SyHn2sjKwQAMd1Hj-WBR9/view?usp=drive_copy" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-external-link-alt"></i> Buka di Google Drive
-                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 4.9 -->
+            <!-- Card 22 -->
             <div class="card">
                 <div class="card-header">
-                    <h2><i class="fas fa-calculator mr-2"></i> Cara Betting Taysen</h2>
+                    <h2><i class="fas fa-random mr-2"></i> Cara Betting Taysen</h2>
                 </div>
                 <div class="card-body">
-                    <div class="image-wrapper" id="image-container-22" onclick="openModal('image-22')">
+                    <div class="image-wrapper" onclick="openModal('image-22')">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                         <img 
-                            src="https://drive.google.com/uc?export=view&id=13tm2n6YAsJWPzF9UeMnYybJFmxdFzOAl" 
+                            src="https://lh3.googleusercontent.com/d/13tm2n6YAsJWPzF9UeMnYybJFmxdFzOAl=w800" 
                             alt="Cara Betting Taysen"
-                            onerror="handleImageError(22, 'https://drive.google.com/file/d/13tm2n6YAsJWPzF9UeMnYybJFmxdFzOAl/view?usp=drive_copy')"
+                            onerror="handleImageError(22)"
                             id="image-22"
                         >
                     </div>
@@ -933,9 +855,6 @@
                         <button class="btn btn-primary" onclick="copyImage('image-22')">
                             <i class="far fa-copy"></i> Salin Gambar
                         </button>
-                        <a href="https://drive.google.com/file/d/13tm2n6YAsJWPzF9UeMnYybJFmxdFzOAl/view?usp=drive_copy" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-external-link-alt"></i> Buka di Google Drive
-                        </a>
                     </div>
                 </div>
             </div>
@@ -944,7 +863,7 @@
 
     <!-- Modal Zoom -->
     <div id="imageModal" class="modal">
-        <span class="close" onclick="closeModal()">×</span>
+        <span class="close" onclick="closeModal()">&times;</span>
         <div class="modal-content">
             <img id="modalImage" class="modal-img" src="" alt="">
         </div>
@@ -965,14 +884,14 @@
         const modal = document.getElementById('imageModal');
         
         // Fungsi untuk menangani error gambar
-        function handleImageError(cardNumber, driveLink) {
+        function handleImageError(cardNumber) {
             const container = document.getElementById(`image-container-${cardNumber}`);
             const img = document.getElementById(`image-${cardNumber}`);
             
             container.querySelector('.loading').style.display = 'none';
             
             // Coba gunakan proxy sebagai fallback
-            const proxyUrl = `https://images.weserv.nl/?url=https://drive.google.com/uc?export=view&id=${img.src.split('/').pop()}`;
+            const proxyUrl = `https://images.weserv.nl/?url=https://drive.google.com/uc?export=view&id=${img.src.split('/').pop().split('=')[0]}`;
             img.src = proxyUrl;
             img.onerror = null;
             
@@ -983,7 +902,7 @@
                         <i class="fas fa-exclamation-triangle"></i>
                         <h3>Gambar tidak dapat dimuat</h3>
                         <p>Silakan coba buka link berikut:</p>
-                        <a href="${driveLink}" target="_blank" style="color: var(--primary);">
+                        <a href="https://drive.google.com/file/d/${img.src.split('/').pop().split('=')[0]}/view" target="_blank" style="color: var(--primary);">
                             Buka di Google Drive
                         </a>
                     </div>
