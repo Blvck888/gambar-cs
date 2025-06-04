@@ -3,130 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panduan Betting - Tampilkan Gambar dari Drive</title>
+    <title>Panduan Betting</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        .image-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .image-card {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            width: 100%;
-            max-width: 600px;
-            transition: transform 0.3s;
-        }
-        .image-card:hover {
-            transform: translateY(-5px);
-        }
-        .image-card img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-bottom: 1px solid #eee;
-        }
-        .image-info {
-            padding: 15px;
-        }
-        .image-info h2 {
-            margin-top: 0;
-            color: #444;
-        }
-        .copy-btn {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-        .copy-btn:hover {
-            background-color: #45a049;
-        }
-        .success-message {
-            color: #4CAF50;
-            text-align: center;
-            margin-top: 10px;
-            display: none;
-        }
-        @media (max-width: 768px) {
-            .image-card {
-                max-width: 100%;
-            }
-        }
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .image-box { margin: 20px; border: 1px solid #ddd; padding: 15px; max-width: 600px; }
+        img { max-width: 100%; height: auto; display: block; margin: 10px 0; }
+        button { padding: 8px 15px; background: #4CAF50; color: white; border: none; cursor: pointer; }
     </style>
 </head>
 <body>
-    <h1>Panduan Cara Betting</h1>
-    
-    <div class="image-container">
-        <div class="image-card">
-            <img id="image1" src="https://drive.google.com/uc?export=view&id=1CGEeOn2DIA9qDTjlckZFGsdhit1khO2T" alt="Cara Betting 4D 2D 3D">
-            <div class="image-info">
-                <h2>2.1 CARA BETTING 4D 2D 3D</h2>
-                <button class="copy-btn" onclick="copyImageToClipboard('image1', 'message1')">Salin Gambar</button>
-                <div id="message1" class="success-message">Gambar berhasil disalin ke clipboard!</div>
-            </div>
-        </div>
-        
-        <div class="image-card">
-            <img id="image2" src="https://drive.google.com/uc?export=view&id=1vHktIcS5c1BR5ldH33paXhvzHvfrK6mk" alt="Cara Betting 2D Depan">
-            <div class="image-info">
-                <h2>2.2 CARA BETTING 2D DEPAN</h2>
-                <button class="copy-btn" onclick="copyImageToClipboard('image2', 'message2')">Salin Gambar</button>
-                <div id="message2" class="success-message">Gambar berhasil disalin ke clipboard!</div>
-            </div>
-        </div>
+    <h1>Panduan Betting</h1>
+
+    <!-- Gambar 1 -->
+    <div class="image-box">
+        <h2>2.1 CARA BETTING 4D 2D 3D</h2>
+        <img src="https://drive.google.com/uc?export=view&id=1CGEeOn2DIA9qDTjlckZFGsdhit1khO2T" 
+             alt="Cara Betting 4D 2D 3D">
+        <button onclick="copyImage('image1')">Salin Gambar</button>
+        <p id="message1" style="color: green; display: none;">Gambar disalin!</p>
+    </div>
+
+    <!-- Gambar 2 -->
+    <div class="image-box">
+        <h2>2.2 CARA BETTING 2D DEPAN</h2>
+        <img src="https://drive.google.com/uc?export=view&id=1vHktIcS5c1BR5ldH33paXhvzHvfrK6mk" 
+             alt="Cara Betting 2D Depan">
+        <button onclick="copyImage('image2')">Salin Gambar</button>
+        <p id="message2" style="color: green; display: none;">Gambar disalin!</p>
     </div>
 
     <script>
-        function copyImageToClipboard(imageId, messageId) {
-            // Select the image
-            const imgElement = document.getElementById(imageId);
+        function copyImage(imgId) {
+            const img = document.getElementById(imgId);
             const range = document.createRange();
-            range.selectNode(imgElement);
+            range.selectNode(img);
             window.getSelection().removeAllRanges();
             window.getSelection().addRange(range);
             
             try {
-                // Execute copy command
-                const successful = document.execCommand('copy');
-                const messageElement = document.getElementById(messageId);
-                
-                if (successful) {
-                    // Show success message
-                    messageElement.style.display = 'block';
-                    setTimeout(() => {
-                        messageElement.style.display = 'none';
-                    }, 2000);
-                } else {
-                    alert('Gagal menyalin gambar. Silakan coba lagi atau gunakan browser lain.');
-                }
+                document.execCommand('copy');
+                const message = document.getElementById(`message${imgId.slice(-1)}`);
+                message.style.display = 'block';
+                setTimeout(() => message.style.display = 'none', 2000);
             } catch (err) {
-                console.error('Error saat menyalin gambar:', err);
-                alert('Browser tidak mendukung penyalinan gambar langsung. Silakan gunakan: 1) Klik kanan gambar 2) Pilih "Salin Gambar"');
+                alert("Browser tidak mendukung salin gambar otomatis. Gunakan: Ctrl+C atau klik kanan → Salin Gambar.");
             }
             
-            // Clean up
             window.getSelection().removeAllRanges();
         }
     </script>
