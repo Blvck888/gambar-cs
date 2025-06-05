@@ -1288,6 +1288,13 @@
             }
         });
 
+        // Menambahkan fungsi untuk menutup modal dengan tombol Esc
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.style.display === 'block') {
+                closeModal();
+            }
+        });
+
         function scrollToTop() {
             window.scrollTo({
                 top: 0,
