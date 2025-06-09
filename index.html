@@ -1516,6 +1516,81 @@
             this.innerHTML = isDarkMode ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
         });
     });
+
+        /**
+ * Fungsi salin gambar tercepat untuk web (Clipboard API + fallback URL)
+ * Panggil dengan: copyImage('id-img', 'Judul Gambar')
+ * Pastikan tombol salin gambar memanggil fungsi ini.
+ */
+async function copyImage(imageId, imageTitle) {
+    const img = document.getElementById(imageId);
+    // Pastikan gambar sudah termuat
+    if (!img.complete || img.naturalWidth === 0) {
+        showToast('Gambar belum termuat, tunggu beberapa detik.', false);
+        return;
+    }
+    // Pakai Clipboard API jika tersedia
+    if (navigator.clipboard && window.ClipboardItem) {
+        try {
+            // Coba fetch gambar sebagai blob (supaya cross-origin support)
+            const blob = await fetch(img.src, {mode: 'cors'}).then(r => r.blob());
+            await navigator.clipboard.write([new ClipboardItem({[blob.type]: blob})]);
+            showToast(`Gambar "${imageTitle}" berhasil disalin!`, true);
+            return;
+        } catch (e) {
+            // Jika gagal (misal CORS), fallback copy URL
+        }
+    }
+    // Fallback: salin URL gambar saja
+    try {
+        await navigator.clipboard.writeText(img.src);
+        showToast('Gambar tidak bisa disalin langsung, URL gambar sudah disalin ke clipboard!', false);
+    } catch (e) {
+        showToast('Gagal menyalin gambar. Gunakan klik kanan → Salin Gambar.', false);
+    }
+}
+
+/**
+ * Fungsi notifikasi toast sederhana.
+ * @param {string} message Pesan toast
+ * @param {boolean} isSuccess True jika sukses, false jika gagal
+ */
+function showToast(message, isSuccess) {
+    let toast = document.getElementById('toastNotification');
+    let toastMsg = document.getElementById('toastMessage');
+    if (!toast) {
+        // Auto inject elemen toast jika belum ada
+        toast = document.createElement('div');
+        toast.id = 'toastNotification';
+        toast.className = 'toast-notification';
+        toast.innerHTML = `<i class="fas"></i><span class="toast-message" id="toastMessage"></span>`;
+        document.body.appendChild(toast);
+        toastMsg = document.getElementById('toastMessage');
+        // CSS minimal agar toast muncul
+        const style = document.createElement('style');
+        style.innerHTML = `
+.toast-notification {
+    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+    background: rgba(0,0,0,.9); color: #fff; padding: 14px 28px;
+    border-radius: 50px; z-index: 9999; font-size: 1rem;
+    box-shadow: 0 6px 24px rgba(0,0,0,.25); display: flex; align-items: center; gap: 8px;
+    opacity: 0; pointer-events: none; transition: opacity .4s;
+}
+.toast-notification.show { opacity: 1; pointer-events: auto; }
+.toast-notification .fa-check-circle { color: #ffd700; }
+.toast-notification .fa-exclamation-circle { color: #ff6868; }
+        `;
+        document.head.appendChild(style);
+    }
+    toastMsg.textContent = message;
+    toast.querySelector('i').className = isSuccess ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+    toast.classList.add('show');
+    toast.style.background = isSuccess
+        ? 'rgba(40,167,69,0.95)' // hijau
+        : 'rgba(220,53,69,0.95)'; // merah
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(() => toast.classList.remove('show'), 2600);
+}
 </script>
 </body>
 </html>
