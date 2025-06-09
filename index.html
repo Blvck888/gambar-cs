@@ -1259,289 +1259,62 @@
         <span class="toast-message" id="toastMessage">Gambar berhasil disalin!</span>
     </div>
 
+    
     <script>
-    let currentScale = 1;
-    const scaleStep = 0.1;
-    const minScale = 0.5;
-    const maxScale = 5;
-    let translateX = 0;
-    let translateY = 0;
-    const modalImg = document.getElementById('modalImage');
-    const modal = document.getElementById('imageModal');
-    const zoomValue = document.getElementById('zoomValue');
-    const toastNotification = document.getElementById('toastNotification');
-    const toastMessage = document.getElementById('toastMessage');
+let currentScale = 1,
+    scaleStep = 0.1,
+    minScale = 0.5,
+    maxScale = 5,
+    translateX = 0,
+    translateY = 0;
 
-    function handleImageError(cardNumber) {
-        const container = document.getElementById(`image-container-${cardNumber}`);
-        container.querySelector('.loading').style.display = 'none';
-        container.innerHTML = `
-            <div class="placeholder">
-                <i class="fas fa-exclamation-triangle"></i>
-                <h3>Gambar tidak dapat dimuat</h3>
-                <p>Silakan coba lagi nanti</p>
-            </div>
-        `;
-    }
+const modalImg = document.getElementById('modalImage'),
+      modal = document.getElementById('imageModal'),
+      zoomValue = document.getElementById('zoomValue'),
+      toastNotification = document.getElementById('toastNotification'),
+      toastMessage = document.getElementById('toastMessage');
 
-    /**
-     * Fungsi salin gambar yang benar-benar kompatibel dan lebih stabil.
-     * Jika Clipboard API gagal, fallback ke menyalin URL gambar ke clipboard.
-     */
-    async function copyImage(imageId, imageTitle) {
-        const img = document.getElementById(imageId);
+/** Tampilkan placeholder jika gagal load gambar */
+function handleImageError(cardNumber) {
+    const container = document.getElementById(`image-container-${cardNumber}`);
+    container.querySelector('.loading').style.display = 'none';
+    container.innerHTML = `
+        <div class="placeholder">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Gambar tidak dapat dimuat</h3>
+            <p>Silakan coba lagi nanti</p>
+        </div>
+    `;
+}
 
-        // Jika gambar belum ter-load, tampilkan warning
-        if (!img.complete || img.naturalWidth === 0) {
-            showToast('Gambar belum termuat, silakan tunggu beberapa detik.', false);
-            return;
-        }
-
-        // Cek dukungan Clipboard API & ClipboardItem (untuk gambar)
-        if (
-            navigator.clipboard &&
-            window.ClipboardItem &&
-            img.naturalWidth > 0 && img.naturalHeight > 0
-        ) {
-            // Pakai cross-origin anonymous agar gambar Google Drive bisa diproses ke canvas
-            const src = img.src;
-            try {
-                // Fetch img as blob (agar tidak kena CORS)
-                const blob = await fetch(src, {mode: 'cors'}).then(r => r.blob());
-                const item = new ClipboardItem({ [blob.type]: blob });
-                await navigator.clipboard.write([item]);
-                showToast(`Gambar "${imageTitle}" berhasil disalin!`, true);
-                return;
-            } catch (err) {
-                // Fallback ke canvas (untuk gambar yang sama origin)
-                try {
-                    // Buat canvas dan draw
-                    const canvas = document.createElement('canvas');
-                    canvas.width = img.naturalWidth;
-                    canvas.height = img.naturalHeight;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0);
-
-                    // Konversi canvas ke blob
-                    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
-                    const item = new ClipboardItem({ 'image/png': blob });
-                    await navigator.clipboard.write([item]);
-                    showToast(`Gambar "${imageTitle}" berhasil disalin!`, true);
-                    return;
-                } catch (e2) {
-                    // Fallback terakhir: Salin URL gambar saja
-                }
-            }
-        }
-
-        // Fallback terakhir: copy URL gambar ke clipboard
-        try {
-            await navigator.clipboard.writeText(img.src);
-            showToast('Gambar tidak bisa disalin langsung, URL gambar sudah disalin ke clipboard!', false);
-        } catch (e) {
-            showToast('Gagal menyalin gambar. Gunakan klik kanan → Salin Gambar.', false);
-        }
-    }
-
-    function showToast(message, isSuccess) {
-        toastMessage.textContent = message;
-
-        // Atur warna berdasarkan sukses/gagal
-        if (isSuccess) {
-            toastNotification.style.background = 'rgba(40, 167, 69, 0.9)';
-            toastNotification.querySelector('i').className = 'fas fa-check-circle';
-        } else {
-            toastNotification.style.background = 'rgba(220, 53, 69, 0.9)';
-            toastNotification.querySelector('i').className = 'fas fa-exclamation-circle';
-        }
-
-        // Tampilkan notifikasi
-        toastNotification.classList.add('show');
-
-        // Sembunyikan setelah 3 detik
-        setTimeout(() => {
-            toastNotification.classList.remove('show');
-        }, 3000);
-    }
-
-    function openModal(imageId) {
-        const img = document.getElementById(imageId);
-        modal.style.display = "block";
-        setTimeout(() => {
-            modal.classList.add('show');
-        }, 10);
-        modalImg.src = img.src;
-        modalImg.alt = img.alt;
-        currentScale = 1;
-        translateX = 0;
-        translateY = 0;
-        updateImageTransform();
-        zoomValue.textContent = `${Math.round(currentScale * 100)}%`;
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-        modal.classList.remove('show');
-        setTimeout(() => {
-            modal.style.display = "none";
-            document.body.style.overflow = '';
-        }, 300);
-    }
-
-    function zoomImage(delta) {
-        currentScale = Math.max(minScale, Math.min(maxScale, currentScale + delta));
-        updateImageTransform();
-        zoomValue.textContent = `${Math.round(currentScale * 100)}%`;
-    }
-
-    function updateImageTransform() {
-        const maxTranslate = Math.max(0, (modalImg.offsetWidth * (currentScale - 1)) / 2);
-        translateX = Math.max(-maxTranslate, Math.min(maxTranslate, translateX));
-        translateY = Math.max(-maxTranslate, Math.min(maxTranslate, translateY));
-        modalImg.style.transform = `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
-        modalImg.style.cursor = currentScale > 1 ? 'move' : 'zoom-in';
-    }
-
-    function handleModalClick(e) {
-        if (currentScale <= 1) {
-            zoomImage(scaleStep);
-        }
-    }
-
-    modal.addEventListener('wheel', function(e) {
-        e.preventDefault();
-        const delta = e.deltaY > 0 ? -scaleStep : scaleStep;
-        zoomImage(delta);
-    }, { passive: false });
-
-    modalImg.addEventListener('dblclick', function() {
-        currentScale = 1;
-        translateX = 0;
-        translateY = 0;
-        updateImageTransform();
-        zoomValue.textContent = `${Math.round(currentScale * 100)}%`;
-    });
-
-    let isDragging = false;
-    let startX, startY;
-
-    modalImg.addEventListener('mousedown', function(e) {
-        if (currentScale > 1) {
-            isDragging = true;
-            startX = e.clientX - translateX;
-            startY = e.clientY - translateY;
-            modalImg.style.cursor = 'grabbing';
-            document.addEventListener('mousemove', handleMouseMove);
-            document.addEventListener('mouseup', handleMouseUp);
-        }
-    });
-
-    function handleMouseMove(e) {
-        if (!isDragging) return;
-        translateX = e.clientX - startX;
-        translateY = e.clientY - startY;
-        updateImageTransform();
-    }
-
-    function handleMouseUp() {
-        isDragging = false;
-        if (currentScale > 1) {
-            modalImg.style.cursor = 'move';
-        }
-        document.removeEventListener('mousemove', handleMouseMove);
-        document.removeEventListener('mouseup', handleMouseUp);
-    }
-
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            closeModal();
-        }
-    });
-
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && modal.style.display === 'block') {
-            closeModal();
-        }
-    });
-
-    function scrollToTop() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    }
-
-    window.addEventListener('scroll', function() {
-        const fab = document.querySelector('.fab');
-        const pageHeight = document.documentElement.scrollHeight;
-        const windowHeight = window.innerHeight;
-        if (window.scrollY > 300 && pageHeight > windowHeight * 1.5) {
-            fab.style.display = 'flex';
-        } else {
-            fab.style.display = 'none';
-        }
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const images = document.querySelectorAll('.image-wrapper img');
-        images.forEach(img => {
-            img.onload = function() {
-                this.parentElement.querySelector('.loading').style.display = 'none';
-            };
-            if (img.complete) {
-                img.parentElement.querySelector('.loading').style.display = 'none';
-            }
-        });
-        const cards = document.querySelectorAll('.card');
-        cards.forEach(card => {
-            card.style.opacity = '1';
-        });
-
-        // Dark mode initialization
-        const darkModeButton = document.getElementById('darkModeButton');
-        const darkMode = localStorage.getItem('darkMode');
-        if (darkMode === 'true') {
-            document.body.classList.add('dark-mode');
-            darkModeButton.innerHTML = '<i class="fas fa-sun"></i>';
-        } else {
-            document.body.classList.remove('dark-mode');
-            darkModeButton.innerHTML = '<i class="fas fa-moon"></i>';
-        }
-
-        // Dark mode toggle event
-        darkModeButton.addEventListener('click', function() {
-            document.body.classList.toggle('dark-mode');
-            const isDarkMode = document.body.classList.contains('dark-mode');
-            localStorage.setItem('darkMode', isDarkMode);
-            this.innerHTML = isDarkMode ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-        });
-    });
-
-        /**
- * Fungsi salin gambar tercepat untuk web (Clipboard API + fallback URL)
- * Panggil dengan: copyImage('id-img', 'Judul Gambar')
- * Pastikan tombol salin gambar memanggil fungsi ini.
+/**
+ * Fungsi salin gambar: Clipboard API, fallback canvas/url
  */
 async function copyImage(imageId, imageTitle) {
     const img = document.getElementById(imageId);
-    // Pastikan gambar sudah termuat
     if (!img.complete || img.naturalWidth === 0) {
-        showToast('Gambar belum termuat, tunggu beberapa detik.', false);
+        showToast('Gambar belum termuat, silakan tunggu beberapa detik.', false);
         return;
     }
-    // Pakai Clipboard API jika tersedia
-    if (navigator.clipboard && window.ClipboardItem) {
+    if (navigator.clipboard && window.ClipboardItem && img.naturalWidth > 0 && img.naturalHeight > 0) {
         try {
-            // Coba fetch gambar sebagai blob (supaya cross-origin support)
             const blob = await fetch(img.src, {mode: 'cors'}).then(r => r.blob());
-            await navigator.clipboard.write([new ClipboardItem({[blob.type]: blob})]);
+            await navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]);
             showToast(`Gambar "${imageTitle}" berhasil disalin!`, true);
             return;
-        } catch (e) {
-            // Jika gagal (misal CORS), fallback copy URL
+        } catch (err) {
+            try {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
+                canvas.getContext('2d').drawImage(img, 0, 0);
+                const blob = await new Promise(res => canvas.toBlob(res, 'image/png'));
+                await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+                showToast(`Gambar "${imageTitle}" berhasil disalin!`, true);
+                return;
+            } catch (e2) {}
         }
     }
-    // Fallback: salin URL gambar saja
     try {
         await navigator.clipboard.writeText(img.src);
         showToast('Gambar tidak bisa disalin langsung, URL gambar sudah disalin ke clipboard!', false);
@@ -1550,25 +1323,21 @@ async function copyImage(imageId, imageTitle) {
     }
 }
 
-/**
- * Fungsi notifikasi toast sederhana.
- * @param {string} message Pesan toast
- * @param {boolean} isSuccess True jika sukses, false jika gagal
- */
+/** Notifikasi toast */
 function showToast(message, isSuccess) {
-    let toast = document.getElementById('toastNotification');
-    let toastMsg = document.getElementById('toastMessage');
-    if (!toast) {
-        // Auto inject elemen toast jika belum ada
-        toast = document.createElement('div');
+    if (!toastNotification) {
+        // Auto inject jika belum ada (opsional jika ID pasti ada)
+        let toast = document.createElement('div');
         toast.id = 'toastNotification';
         toast.className = 'toast-notification';
         toast.innerHTML = `<i class="fas"></i><span class="toast-message" id="toastMessage"></span>`;
         document.body.appendChild(toast);
         toastMsg = document.getElementById('toastMessage');
-        // CSS minimal agar toast muncul
-        const style = document.createElement('style');
-        style.innerHTML = `
+        // Inject style minimal
+        if (!document.getElementById('toast-style')) {
+            const style = document.createElement('style');
+            style.id = 'toast-style';
+            style.innerHTML = `
 .toast-notification {
     position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
     background: rgba(0,0,0,.9); color: #fff; padding: 14px 28px;
@@ -1579,18 +1348,138 @@ function showToast(message, isSuccess) {
 .toast-notification.show { opacity: 1; pointer-events: auto; }
 .toast-notification .fa-check-circle { color: #ffd700; }
 .toast-notification .fa-exclamation-circle { color: #ff6868; }
-        `;
-        document.head.appendChild(style);
+            `;
+            document.head.appendChild(style);
+        }
     }
-    toastMsg.textContent = message;
-    toast.querySelector('i').className = isSuccess ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
-    toast.classList.add('show');
-    toast.style.background = isSuccess
+    toastMessage.textContent = message;
+    toastNotification.querySelector('i').className = isSuccess ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+    toastNotification.classList.add('show');
+    toastNotification.style.background = isSuccess
         ? 'rgba(40,167,69,0.95)' // hijau
         : 'rgba(220,53,69,0.95)'; // merah
-    clearTimeout(toast._timeout);
-    toast._timeout = setTimeout(() => toast.classList.remove('show'), 2600);
+    clearTimeout(toastNotification._timeout);
+    toastNotification._timeout = setTimeout(() => toastNotification.classList.remove('show'), 2600);
 }
+
+/** Modal image handler */
+function openModal(imageId) {
+    const img = document.getElementById(imageId);
+    modal.style.display = "block";
+    setTimeout(() => modal.classList.add('show'), 10);
+    modalImg.src = img.src;
+    modalImg.alt = img.alt;
+    currentScale = 1;
+    translateX = translateY = 0;
+    updateImageTransform();
+    zoomValue.textContent = `${Math.round(currentScale * 100)}%`;
+    document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+    modal.classList.remove('show');
+    setTimeout(() => {
+        modal.style.display = "none";
+        document.body.style.overflow = '';
+    }, 300);
+}
+function zoomImage(delta) {
+    currentScale = Math.max(minScale, Math.min(maxScale, currentScale + delta));
+    updateImageTransform();
+    zoomValue.textContent = `${Math.round(currentScale * 100)}%`;
+}
+function updateImageTransform() {
+    const maxTranslate = Math.max(0, (modalImg.offsetWidth * (currentScale - 1)) / 2);
+    translateX = Math.max(-maxTranslate, Math.min(maxTranslate, translateX));
+    translateY = Math.max(-maxTranslate, Math.min(maxTranslate, translateY));
+    modalImg.style.transform = `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
+    modalImg.style.cursor = currentScale > 1 ? 'move' : 'zoom-in';
+}
+
+/** Event handlers modal */
+modal.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    zoomImage(e.deltaY > 0 ? -scaleStep : scaleStep);
+}, { passive: false });
+
+modalImg.addEventListener('dblclick', function() {
+    currentScale = 1;
+    translateX = translateY = 0;
+    updateImageTransform();
+    zoomValue.textContent = `${Math.round(currentScale * 100)}%`;
+});
+
+let isDragging = false, startX, startY;
+modalImg.addEventListener('mousedown', function(e) {
+    if (currentScale > 1) {
+        isDragging = true;
+        startX = e.clientX - translateX;
+        startY = e.clientY - translateY;
+        modalImg.style.cursor = 'grabbing';
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseup', handleMouseUp);
+    }
+});
+function handleMouseMove(e) {
+    if (!isDragging) return;
+    translateX = e.clientX - startX;
+    translateY = e.clientY - startY;
+    updateImageTransform();
+}
+function handleMouseUp() {
+    isDragging = false;
+    if (currentScale > 1) modalImg.style.cursor = 'move';
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseup', handleMouseUp);
+}
+modal.addEventListener('click', function(e) {
+    if (e.target === modal) closeModal();
+});
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.style.display === 'block') closeModal();
+});
+
+/** Scroll to top button */
+function scrollToTop() {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+window.addEventListener('scroll', function() {
+    const fab = document.querySelector('.fab');
+    const pageHeight = document.documentElement.scrollHeight,
+          windowHeight = window.innerHeight;
+    if (window.scrollY > 300 && pageHeight > windowHeight * 1.5) {
+        fab.style.display = 'flex';
+    } else {
+        fab.style.display = 'none';
+    }
+});
+
+/** On DOM ready: loading handler, dark mode init */
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.image-wrapper img').forEach(img => {
+        img.onload = function() {
+            this.parentElement.querySelector('.loading').style.display = 'none';
+        };
+        if (img.complete) img.parentElement.querySelector('.loading').style.display = 'none';
+    });
+    document.querySelectorAll('.card').forEach(card => card.style.opacity = '1');
+
+    // Dark mode
+    const darkModeButton = document.getElementById('darkModeButton');
+    const darkMode = localStorage.getItem('darkMode');
+    if (darkMode === 'true') {
+        document.body.classList.add('dark-mode');
+        darkModeButton.innerHTML = '<i class="fas fa-sun"></i>';
+    } else {
+        document.body.classList.remove('dark-mode');
+        darkModeButton.innerHTML = '<i class="fas fa-moon"></i>';
+    }
+    darkModeButton.addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDarkMode);
+        this.innerHTML = isDarkMode ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    });
+});
 </script>
 </body>
 </html>
