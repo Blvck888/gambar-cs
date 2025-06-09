@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 
-    <!-- Elegan Style Custom -->
     <style>
         :root {
             --primary: #3a0ca3;
@@ -96,7 +95,6 @@
             margin-bottom: 0;
             font-weight: 600;
         }
-        /* Dark Mode Toggle */
         .dark-mode-toggle {
             position: absolute;
             top: 23px;
@@ -111,7 +109,6 @@
             transition: var(--transition);
         }
         #darkModeButton:hover { color: var(--gold);}
-        /* Gallery Grid */
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
@@ -234,7 +231,6 @@
             transition: var(--transition);
         }
         .fab:hover { transform: scale(1.13) translateY(-3px);}
-        /* Modal & Zoom */
         .modal {
             display: none;
             position: fixed; z-index: 999;
@@ -286,7 +282,6 @@
             min-width: 52px; text-align: center;
             display: flex; align-items: center; justify-content: center;
         }
-        /* Toast */
         .toast {
             position: fixed; bottom: 2rem; right: 2rem;
             background: var(--darker); color: #fff;
@@ -299,7 +294,6 @@
         }
         .toast i { color: var(--gold);}
         .toast.show { transform: translateY(0); opacity: 1;}
-        /* Dark Mode */
         body.dark-mode {
             background: linear-gradient(135deg, #1a1a2e 0%, #181a22 100%);
             color: #e0e0e0;
@@ -333,11 +327,9 @@
     </style>
 </head>
 <body>
-    <!-- Logo Floating -->
     <div class="logo-container">
         <img src="https://cdn.areabermain.club/assets/cdn/az4/2025/04/23/20250423/a82bdc6fb564d0dff3671aeb9a4d1da5/logo.png" alt="Logo Premium Betting">
     </div>
-
     <div class="container">
         <header>
             <h1>Gambar Cara Betting</h1>
@@ -348,7 +340,6 @@
                 </button>
             </div>
         </header>
-
         <!-- Gallery Cards -->
         <div class="gallery">
             <!-- Seluruh 22 kartu, copy-paste dari kode Anda sebelumnya -->
@@ -838,13 +829,10 @@
             </div>
         </div>
     </div>
-
-    <!-- Floating button -->
+    </div>
     <div class="fab" onclick="scrollToTop()" aria-label="Kembali ke atas">
         <i class="fas fa-arrow-up"></i>
     </div>
-
-    <!-- Modal for Image Zoom -->
     <div id="imageModal" class="modal">
         <span class="close" onclick="closeModal()" aria-label="Tutup modal">×</span>
         <div class="modal-content" onclick="handleModalClick(event)">
@@ -856,15 +844,11 @@
             <button class="zoom-btn" onclick="zoomImage(0.1)" aria-label="Perbesar gambar">+</button>
         </div>
     </div>
-
     <div class="toast" id="toast">
         <i class="fas fa-check-circle"></i>
         <span id="toast-message">Gambar berhasil disalin!</span>
     </div>
-
-    <!-- Elegan JS -->
     <script>
-        // Modal Zoom Logic
         let currentScale = 1, scaleStep = 0.1, minScale = 0.5, maxScale = 5, translateX = 0, translateY = 0;
         const modalImg = document.getElementById('modalImage'), modal = document.getElementById('imageModal'), zoomValue = document.getElementById('zoomValue');
         function handleImageError(cardNumber) {
@@ -874,21 +858,36 @@
         }
         function copyImage(imageId) {
             const img = document.getElementById(imageId);
-            if (!navigator.clipboard) return showToast('Clipboard API tidak didukung.');
-            const canvas = document.createElement('canvas'), ctx = canvas.getContext('2d');
-            canvas.width = img.naturalWidth; canvas.height = img.naturalHeight;
+            if (!navigator.clipboard) {
+                showToast('Clipboard API tidak didukung. Gunakan klik kanan → Salin Gambar');
+                return;
+            }
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
             ctx.drawImage(img, 0, 0);
             canvas.toBlob((blob) => {
+                if (!blob) {
+                    showToast('Gagal menyalin gambar. Gunakan klik kanan → Salin Gambar');
+                    return;
+                }
                 const item = new ClipboardItem({ 'image/png': blob });
-                navigator.clipboard.write([item]).then(() => showToast('Gambar berhasil disalin ke clipboard!'))
-                .catch(() => showToast('Gagal menyalin gambar. Gunakan klik kanan → Salin Gambar'));
+                navigator.clipboard.write([item]).then(() => {
+                    showToast('Gambar berhasil disalin ke clipboard!');
+                }).catch(() => {
+                    showToast('Gagal menyalin gambar. Gunakan klik kanan → Salin Gambar');
+                });
             }, 'image/png');
         }
         function showToast(message) {
-            const toast = document.getElementById('toast'), toastMessage = document.getElementById('toast-message');
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
             toastMessage.textContent = message;
             toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
         }
         function openModal(imageId) {
             const img = document.getElementById(imageId);
@@ -941,9 +940,7 @@
                 img.onload = function(){ this.parentElement.querySelector('.loading').style.display='none';};
                 if(img.complete){ img.parentElement.querySelector('.loading').style.display='none'; }
             });
-            // Fade in all cards
             document.querySelectorAll('.card').forEach(card => { card.style.opacity = '1'; });
-            // Dark mode
             const darkModeButton = document.getElementById('darkModeButton');
             const darkMode = localStorage.getItem('darkMode');
             if(darkMode==='true'){ document.body.classList.add('dark-mode'); darkModeButton.innerHTML='<i class="fas fa-sun"></i>'; }
